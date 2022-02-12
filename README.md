@@ -17,7 +17,7 @@
 **Locally-enhanced Window Transformer block (LeWin)**: Non-overlapping window-based self-attention instead of global self- attention.减少了全局self-attention的计算量，捕捉了局部注意力。<br>
 **Window-based Multi-head Self-Attention (W-MSA)**
     **Locally-enhanced Feed-Forward Network (LeFF)**.
-**Multi-Scale Restoration Modulator**
+**Multi-Scale Restoration Modulator** <br>
 细节参见论文《Uformer: A General U-Shaped Transformer for Image Restoration》
 
 ## 四、实现细节
