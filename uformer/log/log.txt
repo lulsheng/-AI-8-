@@ -1,0 +1,1113 @@
+Namespace(batch_size=8, nepoch=250, train_workers=8, eval_workers=8, dataset='SIDD', pretrain_weights='./log/Uformer32/models/model_best.pdiparams', optimizer='adamw', lr_initial=0.0002, weight_decay=0.02, gpu='0,1', arch='Uformer', mode='denoising', save_dir='/home/ma-user/work/deNoTr/log', save_images=False, env='_', checkpoint=5, norm_layer='nn.LayerNorm', embed_dim=32, win_size=8, token_projection='linear', token_mlp='leff', att_se=False, vit_dim=256, vit_depth=12, vit_nheads=8, vit_mlp_dim=512, vit_patch_size=16, global_skip=False, local_skip=False, vit_share=False, train_ps=128, resume=False, train_dir='/home/liangshenglu/sda3/Uformer/datasets/train', val_dir='/home/liangshenglu/sda3/Uformer/datasets/val', warmup=False, warmup_epochs=3)
+Uformer(embed_dim=32, token_projection=linear, token_mlp=leff,win_size=8
+  (pos_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+  (input_proj): InputProj(
+    (proj): Sequential(
+      (0): Conv2D(3, 32, kernel_size=[3, 3], padding=1, data_format=NCHW)
+      (1): LeakyReLU(negative_slope=0.01)
+    )
+  )
+  (output_proj): OutputProj(
+    (proj): Sequential(
+      (0): Conv2D(64, 3, kernel_size=[3, 3], padding=1, data_format=NCHW)
+    )
+  )
+  (encoderlayer_0): BasicUformerLayer(dim=32, input_resolution=(128, 128), depth=2
+    (blocks): LayerList(
+      (0): LeWinTransformerBlock(dim=32, input_resolution=(128, 128), num_heads=1, win_size=8, shift_size=0, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[32], epsilon=1e-05)
+        (attn): WindowAttention(dim=32, win_size=(8, 8), num_heads=1
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=32, out_features=32, dtype=float32)
+            (to_kv): Linear(in_features=32, out_features=64, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=32, out_features=32, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm(normalized_shape=[32], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=32, out_features=128, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(128, 128, kernel_size=[3, 3], padding=1, groups=128, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=128, out_features=32, dtype=float32)
+          )
+        )
+      )
+      (1): LeWinTransformerBlock(dim=32, input_resolution=(128, 128), num_heads=1, win_size=8, shift_size=4, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[32], epsilon=1e-05)
+        (attn): WindowAttention(dim=32, win_size=(8, 8), num_heads=1
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=32, out_features=32, dtype=float32)
+            (to_kv): Linear(in_features=32, out_features=64, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=32, out_features=32, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[32], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=32, out_features=128, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(128, 128, kernel_size=[3, 3], padding=1, groups=128, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=128, out_features=32, dtype=float32)
+          )
+        )
+      )
+    )
+  )
+  (dowsample_0): Downsample(
+    (conv): Sequential(
+      (0): Conv2D(32, 64, kernel_size=[4, 4], stride=[2, 2], padding=1, data_format=NCHW)
+    )
+  )
+  (encoderlayer_1): BasicUformerLayer(dim=64, input_resolution=(64, 64), depth=2
+    (blocks): LayerList(
+      (0): LeWinTransformerBlock(dim=64, input_resolution=(64, 64), num_heads=2, win_size=8, shift_size=0, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[64], epsilon=1e-05)
+        (attn): WindowAttention(dim=64, win_size=(8, 8), num_heads=2
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=64, out_features=64, dtype=float32)
+            (to_kv): Linear(in_features=64, out_features=128, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=64, out_features=64, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[64], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=64, out_features=256, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(256, 256, kernel_size=[3, 3], padding=1, groups=256, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=256, out_features=64, dtype=float32)
+          )
+        )
+      )
+      (1): LeWinTransformerBlock(dim=64, input_resolution=(64, 64), num_heads=2, win_size=8, shift_size=4, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[64], epsilon=1e-05)
+        (attn): WindowAttention(dim=64, win_size=(8, 8), num_heads=2
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=64, out_features=64, dtype=float32)
+            (to_kv): Linear(in_features=64, out_features=128, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=64, out_features=64, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[64], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=64, out_features=256, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(256, 256, kernel_size=[3, 3], padding=1, groups=256, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=256, out_features=64, dtype=float32)
+          )
+        )
+      )
+    )
+  )
+  (dowsample_1): Downsample(
+    (conv): Sequential(
+      (0): Conv2D(64, 128, kernel_size=[4, 4], stride=[2, 2], padding=1, data_format=NCHW)
+    )
+  )
+  (encoderlayer_2): BasicUformerLayer(dim=128, input_resolution=(32, 32), depth=2
+    (blocks): LayerList(
+      (0): LeWinTransformerBlock(dim=128, input_resolution=(32, 32), num_heads=4, win_size=8, shift_size=0, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[128], epsilon=1e-05)
+        (attn): WindowAttention(dim=128, win_size=(8, 8), num_heads=4
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=128, out_features=128, dtype=float32)
+            (to_kv): Linear(in_features=128, out_features=256, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=128, out_features=128, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[128], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=128, out_features=512, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(512, 512, kernel_size=[3, 3], padding=1, groups=512, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=512, out_features=128, dtype=float32)
+          )
+        )
+      )
+      (1): LeWinTransformerBlock(dim=128, input_resolution=(32, 32), num_heads=4, win_size=8, shift_size=4, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[128], epsilon=1e-05)
+        (attn): WindowAttention(dim=128, win_size=(8, 8), num_heads=4
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=128, out_features=128, dtype=float32)
+            (to_kv): Linear(in_features=128, out_features=256, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=128, out_features=128, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[128], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=128, out_features=512, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(512, 512, kernel_size=[3, 3], padding=1, groups=512, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=512, out_features=128, dtype=float32)
+          )
+        )
+      )
+    )
+  )
+  (dowsample_2): Downsample(
+    (conv): Sequential(
+      (0): Conv2D(128, 256, kernel_size=[4, 4], stride=[2, 2], padding=1, data_format=NCHW)
+    )
+  )
+  (encoderlayer_3): BasicUformerLayer(dim=256, input_resolution=(16, 16), depth=2
+    (blocks): LayerList(
+      (0): LeWinTransformerBlock(dim=256, input_resolution=(16, 16), num_heads=8, win_size=8, shift_size=0, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[256], epsilon=1e-05)
+        (attn): WindowAttention(dim=256, win_size=(8, 8), num_heads=8
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=256, out_features=256, dtype=float32)
+            (to_kv): Linear(in_features=256, out_features=512, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=256, out_features=256, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[256], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=256, out_features=1024, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(1024, 1024, kernel_size=[3, 3], padding=1, groups=1024, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=1024, out_features=256, dtype=float32)
+          )
+        )
+      )
+      (1): LeWinTransformerBlock(dim=256, input_resolution=(16, 16), num_heads=8, win_size=8, shift_size=4, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[256], epsilon=1e-05)
+        (attn): WindowAttention(dim=256, win_size=(8, 8), num_heads=8
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=256, out_features=256, dtype=float32)
+            (to_kv): Linear(in_features=256, out_features=512, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=256, out_features=256, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[256], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=256, out_features=1024, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(1024, 1024, kernel_size=[3, 3], padding=1, groups=1024, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=1024, out_features=256, dtype=float32)
+          )
+        )
+      )
+    )
+  )
+  (dowsample_3): Downsample(
+    (conv): Sequential(
+      (0): Conv2D(256, 512, kernel_size=[4, 4], stride=[2, 2], padding=1, data_format=NCHW)
+    )
+  )
+  (conv): BasicUformerLayer(dim=512, input_resolution=(8, 8), depth=2
+    (blocks): LayerList(
+      (0): LeWinTransformerBlock(dim=512, input_resolution=(8, 8), num_heads=16, win_size=8, shift_size=0, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[512], epsilon=1e-05)
+        (attn): WindowAttention(dim=512, win_size=(8, 8), num_heads=16
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=512, out_features=512, dtype=float32)
+            (to_kv): Linear(in_features=512, out_features=1024, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=512, out_features=512, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[512], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=512, out_features=2048, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(2048, 2048, kernel_size=[3, 3], padding=1, groups=2048, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=2048, out_features=512, dtype=float32)
+          )
+        )
+      )
+      (1): LeWinTransformerBlock(dim=512, input_resolution=(8, 8), num_heads=16, win_size=8, shift_size=0, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[512], epsilon=1e-05)
+        (attn): WindowAttention(dim=512, win_size=(8, 8), num_heads=16
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=512, out_features=512, dtype=float32)
+            (to_kv): Linear(in_features=512, out_features=1024, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=512, out_features=512, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[512], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=512, out_features=2048, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(2048, 2048, kernel_size=[3, 3], padding=1, groups=2048, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=2048, out_features=512, dtype=float32)
+          )
+        )
+      )
+    )
+  )
+  (upsample_0): Upsample(
+    (deconv): Sequential(
+      (0): Conv2DTranspose(512, 256, kernel_size=[2, 2], stride=[2, 2], data_format=NCHW)
+    )
+  )
+  (decoderlayer_0): BasicUformerLayer(dim=512, input_resolution=(16, 16), depth=2
+    (blocks): LayerList(
+      (0): LeWinTransformerBlock(dim=512, input_resolution=(16, 16), num_heads=16, win_size=8, shift_size=0, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[512], epsilon=1e-05)
+        (attn): WindowAttention(dim=512, win_size=(8, 8), num_heads=16
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=512, out_features=512, dtype=float32)
+            (to_kv): Linear(in_features=512, out_features=1024, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=512, out_features=512, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[512], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=512, out_features=2048, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(2048, 2048, kernel_size=[3, 3], padding=1, groups=2048, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=2048, out_features=512, dtype=float32)
+          )
+        )
+      )
+      (1): LeWinTransformerBlock(dim=512, input_resolution=(16, 16), num_heads=16, win_size=8, shift_size=4, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[512], epsilon=1e-05)
+        (attn): WindowAttention(dim=512, win_size=(8, 8), num_heads=16
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=512, out_features=512, dtype=float32)
+            (to_kv): Linear(in_features=512, out_features=1024, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=512, out_features=512, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[512], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=512, out_features=2048, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(2048, 2048, kernel_size=[3, 3], padding=1, groups=2048, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=2048, out_features=512, dtype=float32)
+          )
+        )
+      )
+    )
+  )
+  (upsample_1): Upsample(
+    (deconv): Sequential(
+      (0): Conv2DTranspose(512, 128, kernel_size=[2, 2], stride=[2, 2], data_format=NCHW)
+    )
+  )
+  (decoderlayer_1): BasicUformerLayer(dim=256, input_resolution=(32, 32), depth=2
+    (blocks): LayerList(
+      (0): LeWinTransformerBlock(dim=256, input_resolution=(32, 32), num_heads=8, win_size=8, shift_size=0, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[256], epsilon=1e-05)
+        (attn): WindowAttention(dim=256, win_size=(8, 8), num_heads=8
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=256, out_features=256, dtype=float32)
+            (to_kv): Linear(in_features=256, out_features=512, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=256, out_features=256, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[256], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=256, out_features=1024, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(1024, 1024, kernel_size=[3, 3], padding=1, groups=1024, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=1024, out_features=256, dtype=float32)
+          )
+        )
+      )
+      (1): LeWinTransformerBlock(dim=256, input_resolution=(32, 32), num_heads=8, win_size=8, shift_size=4, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[256], epsilon=1e-05)
+        (attn): WindowAttention(dim=256, win_size=(8, 8), num_heads=8
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=256, out_features=256, dtype=float32)
+            (to_kv): Linear(in_features=256, out_features=512, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=256, out_features=256, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[256], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=256, out_features=1024, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(1024, 1024, kernel_size=[3, 3], padding=1, groups=1024, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=1024, out_features=256, dtype=float32)
+          )
+        )
+      )
+    )
+  )
+  (upsample_2): Upsample(
+    (deconv): Sequential(
+      (0): Conv2DTranspose(256, 64, kernel_size=[2, 2], stride=[2, 2], data_format=NCHW)
+    )
+  )
+  (decoderlayer_2): BasicUformerLayer(dim=128, input_resolution=(64, 64), depth=2
+    (blocks): LayerList(
+      (0): LeWinTransformerBlock(dim=128, input_resolution=(64, 64), num_heads=4, win_size=8, shift_size=0, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[128], epsilon=1e-05)
+        (attn): WindowAttention(dim=128, win_size=(8, 8), num_heads=4
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=128, out_features=128, dtype=float32)
+            (to_kv): Linear(in_features=128, out_features=256, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=128, out_features=128, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[128], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=128, out_features=512, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(512, 512, kernel_size=[3, 3], padding=1, groups=512, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=512, out_features=128, dtype=float32)
+          )
+        )
+      )
+      (1): LeWinTransformerBlock(dim=128, input_resolution=(64, 64), num_heads=4, win_size=8, shift_size=4, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[128], epsilon=1e-05)
+        (attn): WindowAttention(dim=128, win_size=(8, 8), num_heads=4
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=128, out_features=128, dtype=float32)
+            (to_kv): Linear(in_features=128, out_features=256, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=128, out_features=128, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[128], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=128, out_features=512, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(512, 512, kernel_size=[3, 3], padding=1, groups=512, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=512, out_features=128, dtype=float32)
+          )
+        )
+      )
+    )
+  )
+  (upsample_3): Upsample(
+    (deconv): Sequential(
+      (0): Conv2DTranspose(128, 32, kernel_size=[2, 2], stride=[2, 2], data_format=NCHW)
+    )
+  )
+  (decoderlayer_3): BasicUformerLayer(dim=64, input_resolution=(128, 128), depth=2
+    (blocks): LayerList(
+      (0): LeWinTransformerBlock(dim=64, input_resolution=(128, 128), num_heads=2, win_size=8, shift_size=0, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[64], epsilon=1e-05)
+        (attn): WindowAttention(dim=64, win_size=(8, 8), num_heads=2
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=64, out_features=64, dtype=float32)
+            (to_kv): Linear(in_features=64, out_features=128, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=64, out_features=64, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): DropPath()
+        (norm2): LayerNorm(normalized_shape=[64], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=64, out_features=256, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(256, 256, kernel_size=[3, 3], padding=1, groups=256, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=256, out_features=64, dtype=float32)
+          )
+        )
+      )
+      (1): LeWinTransformerBlock(dim=64, input_resolution=(128, 128), num_heads=2, win_size=8, shift_size=4, mlp_ratio=4.0
+        (norm1): LayerNorm(normalized_shape=[64], epsilon=1e-05)
+        (attn): WindowAttention(dim=64, win_size=(8, 8), num_heads=2
+          (qkv): LinearProjection(
+            (to_q): Linear(in_features=64, out_features=64, dtype=float32)
+            (to_kv): Linear(in_features=64, out_features=128, dtype=float32)
+          )
+          (attn_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (proj): Linear(in_features=64, out_features=64, dtype=float32)
+          (se_layer): Identity()
+          (proj_drop): Dropout(p=0.0, axis=None, mode=upscale_in_train)
+          (softmax): Softmax(axis=-1)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm(normalized_shape=[64], epsilon=1e-05)
+        (mlp): LeFF(
+          (linear1): Sequential(
+            (0): Linear(in_features=64, out_features=256, dtype=float32)
+            (1): GELU(approximate=False)
+          )
+          (dwconv): Sequential(
+            (0): Conv2D(256, 256, kernel_size=[3, 3], padding=1, groups=256, data_format=NCHW)
+            (1): GELU(approximate=False)
+          )
+          (linear2): Sequential(
+            (0): Linear(in_features=256, out_features=64, dtype=float32)
+          )
+        )
+      )
+    )
+  )
+)
+[Ep 1 it 498	 PSNR demoire: 14.7581	] ----  [best_Ep_demoire 1 best_it_demoire 498 Best_PSNR_demoire 14.7581] 
+[Ep 1 it 997	 PSNR demoire: 19.3269	] ----  [best_Ep_demoire 1 best_it_demoire 997 Best_PSNR_demoire 19.3269] 
+[Ep 1 it 1496	 PSNR demoire: 22.8745	] ----  [best_Ep_demoire 1 best_it_demoire 1496 Best_PSNR_demoire 22.8745] 
+[Ep 1 it 1995	 PSNR demoire: 25.3712	] ----  [best_Ep_demoire 1 best_it_demoire 1995 Best_PSNR_demoire 25.3712] 
+[Ep 1 it 2494	 PSNR demoire: 24.5832	] ----  [best_Ep_demoire 1 best_it_demoire 1995 Best_PSNR_demoire 25.3712] 
+[Ep 1 it 2993	 PSNR demoire: 27.3064	] ----  [best_Ep_demoire 1 best_it_demoire 2993 Best_PSNR_demoire 27.3064] 
+[Ep 1 it 3492	 PSNR demoire: 26.7522	] ----  [best_Ep_demoire 1 best_it_demoire 2993 Best_PSNR_demoire 27.3064] 
+[Ep 1 it 3991	 PSNR demoire: 26.3669	] ----  [best_Ep_demoire 1 best_it_demoire 2993 Best_PSNR_demoire 27.3064] 
+Epoch: 1	Time: 1546.2513	Loss: 1145.6401	LearningRate 0.000200
+[Ep 2 it 498	 PSNR demoire: 27.0161	] ----  [best_Ep_demoire 1 best_it_demoire 2993 Best_PSNR_demoire 27.3064] 
+[Ep 2 it 997	 PSNR demoire: 26.2173	] ----  [best_Ep_demoire 1 best_it_demoire 2993 Best_PSNR_demoire 27.3064] 
+[Ep 2 it 1496	 PSNR demoire: 28.1058	] ----  [best_Ep_demoire 2 best_it_demoire 1496 Best_PSNR_demoire 28.1058] 
+[Ep 2 it 1995	 PSNR demoire: 28.3181	] ----  [best_Ep_demoire 2 best_it_demoire 1995 Best_PSNR_demoire 28.3181] 
+[Ep 2 it 2494	 PSNR demoire: 28.8577	] ----  [best_Ep_demoire 2 best_it_demoire 2494 Best_PSNR_demoire 28.8577] 
+[Ep 2 it 2993	 PSNR demoire: 28.2756	] ----  [best_Ep_demoire 2 best_it_demoire 2494 Best_PSNR_demoire 28.8577] 
+[Ep 2 it 3492	 PSNR demoire: 29.8699	] ----  [best_Ep_demoire 2 best_it_demoire 3492 Best_PSNR_demoire 29.8699] 
+[Ep 2 it 3991	 PSNR demoire: 29.6539	] ----  [best_Ep_demoire 2 best_it_demoire 3492 Best_PSNR_demoire 29.8699] 
+Epoch: 2	Time: 1543.6639	Loss: 486.3922	LearningRate 0.000200
+[Ep 3 it 498	 PSNR demoire: 29.8014	] ----  [best_Ep_demoire 2 best_it_demoire 3492 Best_PSNR_demoire 29.8699] 
+[Ep 3 it 997	 PSNR demoire: 31.0731	] ----  [best_Ep_demoire 3 best_it_demoire 997 Best_PSNR_demoire 31.0731] 
+[Ep 3 it 1496	 PSNR demoire: 28.9352	] ----  [best_Ep_demoire 3 best_it_demoire 997 Best_PSNR_demoire 31.0731] 
+[Ep 3 it 1995	 PSNR demoire: 27.6961	] ----  [best_Ep_demoire 3 best_it_demoire 997 Best_PSNR_demoire 31.0731] 
+[Ep 3 it 2494	 PSNR demoire: 28.3364	] ----  [best_Ep_demoire 3 best_it_demoire 997 Best_PSNR_demoire 31.0731] 
+[Ep 3 it 2993	 PSNR demoire: 29.9690	] ----  [best_Ep_demoire 3 best_it_demoire 997 Best_PSNR_demoire 31.0731] 
+[Ep 3 it 3492	 PSNR demoire: 31.3915	] ----  [best_Ep_demoire 3 best_it_demoire 3492 Best_PSNR_demoire 31.3915] 
+[Ep 3 it 3991	 PSNR demoire: 31.2348	] ----  [best_Ep_demoire 3 best_it_demoire 3492 Best_PSNR_demoire 31.3915] 
+Epoch: 3	Time: 1538.3060	Loss: 399.8236	LearningRate 0.000200
+[Ep 4 it 498	 PSNR demoire: 30.7221	] ----  [best_Ep_demoire 3 best_it_demoire 3492 Best_PSNR_demoire 31.3915] 
+[Ep 4 it 997	 PSNR demoire: 30.2927	] ----  [best_Ep_demoire 3 best_it_demoire 3492 Best_PSNR_demoire 31.3915] 
+[Ep 4 it 1496	 PSNR demoire: 30.8169	] ----  [best_Ep_demoire 3 best_it_demoire 3492 Best_PSNR_demoire 31.3915] 
+[Ep 4 it 1995	 PSNR demoire: 31.1455	] ----  [best_Ep_demoire 3 best_it_demoire 3492 Best_PSNR_demoire 31.3915] 
+[Ep 4 it 2494	 PSNR demoire: 31.8211	] ----  [best_Ep_demoire 4 best_it_demoire 2494 Best_PSNR_demoire 31.8211] 
+[Ep 4 it 2993	 PSNR demoire: 31.4101	] ----  [best_Ep_demoire 4 best_it_demoire 2494 Best_PSNR_demoire 31.8211] 
+[Ep 4 it 3492	 PSNR demoire: 31.9022	] ----  [best_Ep_demoire 4 best_it_demoire 3492 Best_PSNR_demoire 31.9022] 
+[Ep 4 it 3991	 PSNR demoire: 31.9502	] ----  [best_Ep_demoire 4 best_it_demoire 3991 Best_PSNR_demoire 31.9502] 
+Epoch: 4	Time: 1540.4006	Loss: 341.0190	LearningRate 0.000200
+[Ep 5 it 498	 PSNR demoire: 31.5583	] ----  [best_Ep_demoire 4 best_it_demoire 3991 Best_PSNR_demoire 31.9502] 
+[Ep 5 it 997	 PSNR demoire: 32.5648	] ----  [best_Ep_demoire 5 best_it_demoire 997 Best_PSNR_demoire 32.5648] 
+[Ep 5 it 1496	 PSNR demoire: 30.1557	] ----  [best_Ep_demoire 5 best_it_demoire 997 Best_PSNR_demoire 32.5648] 
+[Ep 5 it 1995	 PSNR demoire: 32.1604	] ----  [best_Ep_demoire 5 best_it_demoire 997 Best_PSNR_demoire 32.5648] 
+[Ep 5 it 2494	 PSNR demoire: 32.2567	] ----  [best_Ep_demoire 5 best_it_demoire 997 Best_PSNR_demoire 32.5648] 
+[Ep 5 it 2993	 PSNR demoire: 31.9114	] ----  [best_Ep_demoire 5 best_it_demoire 997 Best_PSNR_demoire 32.5648] 
+[Ep 5 it 3492	 PSNR demoire: 32.0192	] ----  [best_Ep_demoire 5 best_it_demoire 997 Best_PSNR_demoire 32.5648] 
+[Ep 5 it 3991	 PSNR demoire: 27.9338	] ----  [best_Ep_demoire 5 best_it_demoire 997 Best_PSNR_demoire 32.5648] 
+Epoch: 5	Time: 1538.4960	Loss: 312.5418	LearningRate 0.000200
+[Ep 6 it 498	 PSNR demoire: 32.1362	] ----  [best_Ep_demoire 5 best_it_demoire 997 Best_PSNR_demoire 32.5648] 
+[Ep 6 it 997	 PSNR demoire: 32.4703	] ----  [best_Ep_demoire 5 best_it_demoire 997 Best_PSNR_demoire 32.5648] 
+[Ep 6 it 1496	 PSNR demoire: 33.0013	] ----  [best_Ep_demoire 6 best_it_demoire 1496 Best_PSNR_demoire 33.0013] 
+[Ep 6 it 1995	 PSNR demoire: 32.7531	] ----  [best_Ep_demoire 6 best_it_demoire 1496 Best_PSNR_demoire 33.0013] 
+[Ep 6 it 2494	 PSNR demoire: 32.7911	] ----  [best_Ep_demoire 6 best_it_demoire 1496 Best_PSNR_demoire 33.0013] 
+[Ep 6 it 2993	 PSNR demoire: 31.9509	] ----  [best_Ep_demoire 6 best_it_demoire 1496 Best_PSNR_demoire 33.0013] 
+[Ep 6 it 3492	 PSNR demoire: 32.4903	] ----  [best_Ep_demoire 6 best_it_demoire 1496 Best_PSNR_demoire 33.0013] 
+[Ep 6 it 3991	 PSNR demoire: 29.8554	] ----  [best_Ep_demoire 6 best_it_demoire 1496 Best_PSNR_demoire 33.0013] 
+Epoch: 6	Time: 1538.6227	Loss: 299.8779	LearningRate 0.000200
+[Ep 7 it 498	 PSNR demoire: 33.1013	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+[Ep 7 it 997	 PSNR demoire: 32.4862	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+[Ep 7 it 1496	 PSNR demoire: 32.7688	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+[Ep 7 it 1995	 PSNR demoire: 31.6190	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+[Ep 7 it 2494	 PSNR demoire: 32.1369	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+[Ep 7 it 2993	 PSNR demoire: 30.6274	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+[Ep 7 it 3492	 PSNR demoire: 31.2942	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+[Ep 7 it 3991	 PSNR demoire: 32.7566	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+Epoch: 7	Time: 1541.5924	Loss: 293.8640	LearningRate 0.000200
+[Ep 8 it 498	 PSNR demoire: 32.2028	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+[Ep 8 it 997	 PSNR demoire: 32.3439	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+[Ep 8 it 1496	 PSNR demoire: 32.2455	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+[Ep 8 it 1995	 PSNR demoire: 31.0863	] ----  [best_Ep_demoire 7 best_it_demoire 498 Best_PSNR_demoire 33.1013] 
+[Ep 8 it 2494	 PSNR demoire: 33.1366	] ----  [best_Ep_demoire 8 best_it_demoire 2494 Best_PSNR_demoire 33.1366] 
+[Ep 8 it 2993	 PSNR demoire: 32.3315	] ----  [best_Ep_demoire 8 best_it_demoire 2494 Best_PSNR_demoire 33.1366] 
+[Ep 8 it 3492	 PSNR demoire: 30.6792	] ----  [best_Ep_demoire 8 best_it_demoire 2494 Best_PSNR_demoire 33.1366] 
+[Ep 8 it 3991	 PSNR demoire: 31.5792	] ----  [best_Ep_demoire 8 best_it_demoire 2494 Best_PSNR_demoire 33.1366] 
+Epoch: 8	Time: 1538.3695	Loss: 272.8438	LearningRate 0.000200
+[Ep 9 it 498	 PSNR demoire: 33.3004	] ----  [best_Ep_demoire 9 best_it_demoire 498 Best_PSNR_demoire 33.3004] 
+[Ep 9 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 9 best_it_demoire 498 Best_PSNR_demoire 33.3004] 
+[Ep 9 it 1496	 PSNR demoire: 30.9256	] ----  [best_Ep_demoire 9 best_it_demoire 498 Best_PSNR_demoire 33.3004] 
+[Ep 9 it 1995	 PSNR demoire: 33.4284	] ----  [best_Ep_demoire 9 best_it_demoire 1995 Best_PSNR_demoire 33.4284] 
+[Ep 9 it 2494	 PSNR demoire: 31.2451	] ----  [best_Ep_demoire 9 best_it_demoire 1995 Best_PSNR_demoire 33.4284] 
+[Ep 9 it 2993	 PSNR demoire: 32.4419	] ----  [best_Ep_demoire 9 best_it_demoire 1995 Best_PSNR_demoire 33.4284] 
+[Ep 9 it 3492	 PSNR demoire: 33.4376	] ----  [best_Ep_demoire 9 best_it_demoire 3492 Best_PSNR_demoire 33.4376] 
+[Ep 9 it 3991	 PSNR demoire: 32.1502	] ----  [best_Ep_demoire 9 best_it_demoire 3492 Best_PSNR_demoire 33.4376] 
+Epoch: 9	Time: 1544.9936	Loss: 270.1947	LearningRate 0.000200
+[Ep 10 it 498	 PSNR demoire: 32.1026	] ----  [best_Ep_demoire 9 best_it_demoire 3492 Best_PSNR_demoire 33.4376] 
+[Ep 10 it 997	 PSNR demoire: 33.0869	] ----  [best_Ep_demoire 9 best_it_demoire 3492 Best_PSNR_demoire 33.4376] 
+[Ep 10 it 1496	 PSNR demoire: 32.3798	] ----  [best_Ep_demoire 9 best_it_demoire 3492 Best_PSNR_demoire 33.4376] 
+[Ep 10 it 1995	 PSNR demoire: 31.1127	] ----  [best_Ep_demoire 9 best_it_demoire 3492 Best_PSNR_demoire 33.4376] 
+[Ep 10 it 2494	 PSNR demoire: 33.1754	] ----  [best_Ep_demoire 9 best_it_demoire 3492 Best_PSNR_demoire 33.4376] 
+[Ep 10 it 2993	 PSNR demoire: 33.1746	] ----  [best_Ep_demoire 9 best_it_demoire 3492 Best_PSNR_demoire 33.4376] 
+[Ep 10 it 3492	 PSNR demoire: 32.2695	] ----  [best_Ep_demoire 9 best_it_demoire 3492 Best_PSNR_demoire 33.4376] 
+[Ep 10 it 3991	 PSNR demoire: 32.8365	] ----  [best_Ep_demoire 9 best_it_demoire 3492 Best_PSNR_demoire 33.4376] 
+Epoch: 10	Time: 1536.2689	Loss: 260.8263	LearningRate 0.000200
+[Ep 11 it 498	 PSNR demoire: 33.0961	] ----  [best_Ep_demoire 9 best_it_demoire 3492 Best_PSNR_demoire 33.4376] 
+[Ep 11 it 997	 PSNR demoire: 33.5910	] ----  [best_Ep_demoire 11 best_it_demoire 997 Best_PSNR_demoire 33.5910] 
+[Ep 11 it 1496	 PSNR demoire: 33.4248	] ----  [best_Ep_demoire 11 best_it_demoire 997 Best_PSNR_demoire 33.5910] 
+[Ep 11 it 1995	 PSNR demoire: 32.8672	] ----  [best_Ep_demoire 11 best_it_demoire 997 Best_PSNR_demoire 33.5910] 
+[Ep 11 it 2494	 PSNR demoire: 33.2916	] ----  [best_Ep_demoire 11 best_it_demoire 997 Best_PSNR_demoire 33.5910] 
+[Ep 11 it 2993	 PSNR demoire: 31.3830	] ----  [best_Ep_demoire 11 best_it_demoire 997 Best_PSNR_demoire 33.5910] 
+[Ep 11 it 3492	 PSNR demoire: 31.9964	] ----  [best_Ep_demoire 11 best_it_demoire 997 Best_PSNR_demoire 33.5910] 
+[Ep 11 it 3991	 PSNR demoire: 33.7384	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+Epoch: 11	Time: 1540.5073	Loss: 250.8318	LearningRate 0.000200
+[Ep 12 it 498	 PSNR demoire: 32.5156	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 12 it 997	 PSNR demoire: 32.0695	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 12 it 1496	 PSNR demoire: 32.9975	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 12 it 1995	 PSNR demoire: 32.8114	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 12 it 2494	 PSNR demoire: 32.8994	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 12 it 2993	 PSNR demoire: 31.8718	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 12 it 3492	 PSNR demoire: 33.4197	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 12 it 3991	 PSNR demoire: 33.4965	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+Epoch: 12	Time: 1536.3637	Loss: 250.3072	LearningRate 0.000200
+[Ep 13 it 498	 PSNR demoire: 32.3110	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 13 it 997	 PSNR demoire: 32.2669	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 13 it 1496	 PSNR demoire: 33.0383	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 13 it 1995	 PSNR demoire: 32.9747	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 13 it 2494	 PSNR demoire: 32.5286	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 13 it 2993	 PSNR demoire: 33.2415	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 13 it 3492	 PSNR demoire: 32.7459	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 13 it 3991	 PSNR demoire: 33.0344	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+Epoch: 13	Time: 1538.0021	Loss: 244.5200	LearningRate 0.000200
+[Ep 14 it 498	 PSNR demoire: 32.2002	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 14 it 997	 PSNR demoire: 32.7250	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 14 it 1496	 PSNR demoire: 33.4284	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 14 it 1995	 PSNR demoire: 33.2613	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 14 it 2494	 PSNR demoire: 33.5530	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 14 it 2993	 PSNR demoire: 33.0890	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 14 it 3492	 PSNR demoire: 32.2267	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 14 it 3991	 PSNR demoire: 32.0863	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+Epoch: 14	Time: 1538.5513	Loss: 241.6526	LearningRate 0.000200
+[Ep 15 it 498	 PSNR demoire: 32.5417	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 15 it 997	 PSNR demoire: 32.9921	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 15 it 1496	 PSNR demoire: 32.8634	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 15 it 1995	 PSNR demoire: 33.4496	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 15 it 2494	 PSNR demoire: 33.2749	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 15 it 2993	 PSNR demoire: 32.2890	] ----  [best_Ep_demoire 11 best_it_demoire 3991 Best_PSNR_demoire 33.7384] 
+[Ep 15 it 3492	 PSNR demoire: 34.1458	] ----  [best_Ep_demoire 15 best_it_demoire 3492 Best_PSNR_demoire 34.1458] 
+[Ep 15 it 3991	 PSNR demoire: 32.4770	] ----  [best_Ep_demoire 15 best_it_demoire 3492 Best_PSNR_demoire 34.1458] 
+Epoch: 15	Time: 1538.4078	Loss: 241.1700	LearningRate 0.000200
+[Ep 16 it 498	 PSNR demoire: 33.8556	] ----  [best_Ep_demoire 15 best_it_demoire 3492 Best_PSNR_demoire 34.1458] 
+[Ep 16 it 997	 PSNR demoire: 33.2131	] ----  [best_Ep_demoire 15 best_it_demoire 3492 Best_PSNR_demoire 34.1458] 
+[Ep 16 it 1496	 PSNR demoire: 32.7523	] ----  [best_Ep_demoire 15 best_it_demoire 3492 Best_PSNR_demoire 34.1458] 
+[Ep 16 it 1995	 PSNR demoire: 32.3973	] ----  [best_Ep_demoire 15 best_it_demoire 3492 Best_PSNR_demoire 34.1458] 
+[Ep 16 it 2494	 PSNR demoire: 33.1322	] ----  [best_Ep_demoire 15 best_it_demoire 3492 Best_PSNR_demoire 34.1458] 
+[Ep 16 it 2993	 PSNR demoire: 33.0873	] ----  [best_Ep_demoire 15 best_it_demoire 3492 Best_PSNR_demoire 34.1458] 
+[Ep 16 it 3492	 PSNR demoire: 33.5514	] ----  [best_Ep_demoire 15 best_it_demoire 3492 Best_PSNR_demoire 34.1458] 
+[Ep 16 it 3991	 PSNR demoire: 33.6599	] ----  [best_Ep_demoire 15 best_it_demoire 3492 Best_PSNR_demoire 34.1458] 
+Epoch: 16	Time: 1534.2251	Loss: 239.2157	LearningRate 0.000200
+[Ep 17 it 498	 PSNR demoire: 32.8139	] ----  [best_Ep_demoire 15 best_it_demoire 3492 Best_PSNR_demoire 34.1458] 
+[Ep 17 it 997	 PSNR demoire: 34.3836	] ----  [best_Ep_demoire 17 best_it_demoire 997 Best_PSNR_demoire 34.3836] 
+[Ep 17 it 1496	 PSNR demoire: 32.4540	] ----  [best_Ep_demoire 17 best_it_demoire 997 Best_PSNR_demoire 34.3836] 
+[Ep 17 it 1995	 PSNR demoire: 33.7879	] ----  [best_Ep_demoire 17 best_it_demoire 997 Best_PSNR_demoire 34.3836] 
+[Ep 17 it 2494	 PSNR demoire: 34.5272	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 17 it 2993	 PSNR demoire: 33.3151	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 17 it 3492	 PSNR demoire: 32.4702	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 17 it 3991	 PSNR demoire: 32.2393	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+Epoch: 17	Time: 1537.0594	Loss: 229.3357	LearningRate 0.000200
+[Ep 18 it 498	 PSNR demoire: 33.6444	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 18 it 997	 PSNR demoire: 33.2066	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 18 it 1496	 PSNR demoire: 33.1339	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 18 it 1995	 PSNR demoire: 33.9982	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 18 it 2494	 PSNR demoire: 32.2952	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 18 it 2993	 PSNR demoire: 34.1016	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 18 it 3492	 PSNR demoire: 33.8738	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 18 it 3991	 PSNR demoire: 34.3507	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+Epoch: 18	Time: 1538.8653	Loss: 226.0999	LearningRate 0.000200
+[Ep 19 it 498	 PSNR demoire: 33.6602	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 19 it 997	 PSNR demoire: 33.7808	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 19 it 1496	 PSNR demoire: 33.6881	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 19 it 1995	 PSNR demoire: 33.7389	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 19 it 2494	 PSNR demoire: 34.1282	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 19 it 2993	 PSNR demoire: 33.4876	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 19 it 3492	 PSNR demoire: 33.5714	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 19 it 3991	 PSNR demoire: 34.1161	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+Epoch: 19	Time: 1533.4501	Loss: 216.9140	LearningRate 0.000200
+[Ep 20 it 498	 PSNR demoire: 33.4864	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 20 it 997	 PSNR demoire: 32.4687	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 20 it 1496	 PSNR demoire: 32.4560	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 20 it 1995	 PSNR demoire: 34.0534	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 20 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 20 it 2993	 PSNR demoire: inf	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 20 it 3492	 PSNR demoire: 33.3928	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 20 it 3991	 PSNR demoire: 33.4387	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+Epoch: 20	Time: 1538.2297	Loss: 219.8507	LearningRate 0.000200
+[Ep 21 it 498	 PSNR demoire: 34.0624	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 21 it 997	 PSNR demoire: 33.8807	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 21 it 1496	 PSNR demoire: 33.9625	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 21 it 1995	 PSNR demoire: 34.3759	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 21 it 2494	 PSNR demoire: 34.0939	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 21 it 2993	 PSNR demoire: 34.0342	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 21 it 3492	 PSNR demoire: 33.8905	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 21 it 3991	 PSNR demoire: 34.2339	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+Epoch: 21	Time: 1533.6881	Loss: 215.8535	LearningRate 0.000200
+[Ep 22 it 498	 PSNR demoire: 34.0371	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 22 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 22 it 1496	 PSNR demoire: 34.0408	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 22 it 1995	 PSNR demoire: 33.3461	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 22 it 2494	 PSNR demoire: 33.9786	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 22 it 2993	 PSNR demoire: 33.5231	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 22 it 3492	 PSNR demoire: 33.1569	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 22 it 3991	 PSNR demoire: 34.0467	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+Epoch: 22	Time: 1538.2977	Loss: 209.8830	LearningRate 0.000200
+[Ep 23 it 498	 PSNR demoire: 33.9218	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 23 it 997	 PSNR demoire: 33.8120	] ----  [best_Ep_demoire 17 best_it_demoire 2494 Best_PSNR_demoire 34.5272] 
+[Ep 23 it 1496	 PSNR demoire: 34.5564	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 23 it 1995	 PSNR demoire: 32.5707	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 23 it 2494	 PSNR demoire: 33.6031	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 23 it 2993	 PSNR demoire: 34.0880	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 23 it 3492	 PSNR demoire: 34.0923	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 23 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+Epoch: 23	Time: 1537.9319	Loss: 210.0199	LearningRate 0.000200
+[Ep 24 it 498	 PSNR demoire: 33.5334	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 24 it 997	 PSNR demoire: 34.0825	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 24 it 1496	 PSNR demoire: 33.8587	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 24 it 1995	 PSNR demoire: 32.4882	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 24 it 2494	 PSNR demoire: 34.0048	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 24 it 2993	 PSNR demoire: 34.5340	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 24 it 3492	 PSNR demoire: 32.6546	] ----  [best_Ep_demoire 23 best_it_demoire 1496 Best_PSNR_demoire 34.5564] 
+[Ep 24 it 3991	 PSNR demoire: 34.6254	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+Epoch: 24	Time: 1542.2643	Loss: 207.2068	LearningRate 0.000200
+[Ep 25 it 498	 PSNR demoire: inf	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 25 it 997	 PSNR demoire: 34.2916	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 25 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 25 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 25 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 25 it 2993	 PSNR demoire: 33.1130	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 25 it 3492	 PSNR demoire: 34.3006	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 25 it 3991	 PSNR demoire: 33.8359	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+Epoch: 25	Time: 1537.9143	Loss: 203.3931	LearningRate 0.000200
+[Ep 26 it 498	 PSNR demoire: 34.0701	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 26 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 26 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 26 it 1995	 PSNR demoire: 34.5049	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 26 it 2494	 PSNR demoire: 34.4587	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 26 it 2993	 PSNR demoire: 33.7822	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 26 it 3492	 PSNR demoire: 34.5069	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 26 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+Epoch: 26	Time: 1538.6594	Loss: 201.6958	LearningRate 0.000200
+[Ep 27 it 498	 PSNR demoire: 34.2030	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 27 it 997	 PSNR demoire: 34.5355	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 27 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 27 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 27 it 2494	 PSNR demoire: 33.6537	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 27 it 2993	 PSNR demoire: 33.6961	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 27 it 3492	 PSNR demoire: 33.9606	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+[Ep 27 it 3991	 PSNR demoire: 34.5203	] ----  [best_Ep_demoire 24 best_it_demoire 3991 Best_PSNR_demoire 34.6254] 
+Epoch: 27	Time: 1538.4813	Loss: 202.9344	LearningRate 0.000200
+[Ep 28 it 498	 PSNR demoire: 34.6873	] ----  [best_Ep_demoire 28 best_it_demoire 498 Best_PSNR_demoire 34.6873] 
+[Ep 28 it 997	 PSNR demoire: 34.2056	] ----  [best_Ep_demoire 28 best_it_demoire 498 Best_PSNR_demoire 34.6873] 
+[Ep 28 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 28 best_it_demoire 498 Best_PSNR_demoire 34.6873] 
+[Ep 28 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 28 best_it_demoire 498 Best_PSNR_demoire 34.6873] 
+[Ep 28 it 2494	 PSNR demoire: 33.8486	] ----  [best_Ep_demoire 28 best_it_demoire 498 Best_PSNR_demoire 34.6873] 
+[Ep 28 it 2993	 PSNR demoire: 34.4627	] ----  [best_Ep_demoire 28 best_it_demoire 498 Best_PSNR_demoire 34.6873] 
+[Ep 28 it 3492	 PSNR demoire: 34.2496	] ----  [best_Ep_demoire 28 best_it_demoire 498 Best_PSNR_demoire 34.6873] 
+[Ep 28 it 3991	 PSNR demoire: 34.5631	] ----  [best_Ep_demoire 28 best_it_demoire 498 Best_PSNR_demoire 34.6873] 
+Epoch: 28	Time: 1541.2369	Loss: 199.2699	LearningRate 0.000200
+[Ep 29 it 498	 PSNR demoire: 34.7795	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 29 it 997	 PSNR demoire: 34.6333	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 29 it 1496	 PSNR demoire: 34.2991	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 29 it 1995	 PSNR demoire: 34.3556	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 29 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 29 it 2993	 PSNR demoire: 34.7336	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 29 it 3492	 PSNR demoire: 34.3575	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 29 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+Epoch: 29	Time: 1576.3995	Loss: 197.8884	LearningRate 0.000200
+[Ep 30 it 498	 PSNR demoire: 33.6127	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 30 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 30 it 1496	 PSNR demoire: 34.7340	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 30 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 30 it 2494	 PSNR demoire: 32.7260	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 30 it 2993	 PSNR demoire: 34.2935	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 30 it 3492	 PSNR demoire: 32.0988	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+[Ep 30 it 3991	 PSNR demoire: 34.7253	] ----  [best_Ep_demoire 29 best_it_demoire 498 Best_PSNR_demoire 34.7795] 
+Epoch: 30	Time: 1586.1899	Loss: 196.9413	LearningRate 0.000200
+[Ep 31 it 498	 PSNR demoire: 34.8702	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 31 it 997	 PSNR demoire: 34.5656	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 31 it 1496	 PSNR demoire: 34.7151	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 31 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 31 it 2494	 PSNR demoire: 34.2332	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 31 it 2993	 PSNR demoire: 34.4679	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 31 it 3492	 PSNR demoire: 34.2157	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 31 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+Epoch: 31	Time: 1585.0412	Loss: 197.3175	LearningRate 0.000200
+[Ep 32 it 498	 PSNR demoire: 34.3929	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 32 it 997	 PSNR demoire: 34.1376	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 32 it 1496	 PSNR demoire: 33.9681	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 32 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 32 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 32 it 2993	 PSNR demoire: 34.7527	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 32 it 3492	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 32 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+Epoch: 32	Time: 1546.1937	Loss: 193.6178	LearningRate 0.000200
+[Ep 33 it 498	 PSNR demoire: 34.1627	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 33 it 997	 PSNR demoire: 34.6313	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 33 it 1496	 PSNR demoire: 33.3861	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 33 it 1995	 PSNR demoire: 34.0471	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 33 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 33 it 2993	 PSNR demoire: 34.1618	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 33 it 3492	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 33 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+Epoch: 33	Time: 1574.6555	Loss: 190.9352	LearningRate 0.000200
+[Ep 34 it 498	 PSNR demoire: 34.8467	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 34 it 997	 PSNR demoire: 34.1930	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 34 it 1496	 PSNR demoire: 34.2294	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 34 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 34 it 2494	 PSNR demoire: 33.7210	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 34 it 2993	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 34 it 3492	 PSNR demoire: 34.4835	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 34 it 3991	 PSNR demoire: 34.2802	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+Epoch: 34	Time: 1571.1218	Loss: 192.7149	LearningRate 0.000200
+[Ep 35 it 498	 PSNR demoire: inf	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 35 it 997	 PSNR demoire: 34.8148	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 35 it 1496	 PSNR demoire: 34.6980	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 35 it 1995	 PSNR demoire: 34.7075	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 35 it 2494	 PSNR demoire: 34.4849	] ----  [best_Ep_demoire 31 best_it_demoire 498 Best_PSNR_demoire 34.8702] 
+[Ep 35 it 2993	 PSNR demoire: 35.0244	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+[Ep 35 it 3492	 PSNR demoire: inf	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+[Ep 35 it 3991	 PSNR demoire: 34.9502	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+Epoch: 35	Time: 1576.6380	Loss: 190.5199	LearningRate 0.000200
+[Ep 36 it 498	 PSNR demoire: 34.3372	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+[Ep 36 it 997	 PSNR demoire: 34.5729	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+[Ep 36 it 1496	 PSNR demoire: 34.6465	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+[Ep 36 it 1995	 PSNR demoire: 34.7233	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+[Ep 36 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+[Ep 36 it 2993	 PSNR demoire: 34.4012	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+[Ep 36 it 3492	 PSNR demoire: inf	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+[Ep 36 it 3991	 PSNR demoire: 34.8202	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+Epoch: 36	Time: 1569.7817	Loss: 192.1069	LearningRate 0.000200
+[Ep 37 it 498	 PSNR demoire: inf	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+[Ep 37 it 997	 PSNR demoire: 34.6504	] ----  [best_Ep_demoire 35 best_it_demoire 2993 Best_PSNR_demoire 35.0244] 
+[Ep 37 it 1496	 PSNR demoire: 35.1585	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 37 it 1995	 PSNR demoire: 33.3918	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 37 it 2494	 PSNR demoire: 34.4154	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 37 it 2993	 PSNR demoire: 35.1477	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 37 it 3492	 PSNR demoire: 34.8084	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 37 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+Epoch: 37	Time: 1555.7500	Loss: 188.7142	LearningRate 0.000200
+[Ep 38 it 498	 PSNR demoire: inf	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 38 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 38 it 1496	 PSNR demoire: 34.6974	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 38 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 38 it 2494	 PSNR demoire: 34.3639	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 38 it 2993	 PSNR demoire: 35.0802	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 38 it 3492	 PSNR demoire: 34.1611	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 38 it 3991	 PSNR demoire: 34.0767	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+Epoch: 38	Time: 1566.8047	Loss: 188.2368	LearningRate 0.000200
+[Ep 39 it 498	 PSNR demoire: 34.0575	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 39 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 39 it 1496	 PSNR demoire: 34.8118	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 39 it 1995	 PSNR demoire: 34.9476	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 39 it 2494	 PSNR demoire: 34.9284	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 39 it 2993	 PSNR demoire: 35.1096	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 39 it 3492	 PSNR demoire: inf	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+[Ep 39 it 3991	 PSNR demoire: 34.3711	] ----  [best_Ep_demoire 37 best_it_demoire 1496 Best_PSNR_demoire 35.1585] 
+Epoch: 39	Time: 1554.2469	Loss: 188.3075	LearningRate 0.000200
+[Ep 40 it 498	 PSNR demoire: 35.2776	] ----  [best_Ep_demoire 40 best_it_demoire 498 Best_PSNR_demoire 35.2776] 
+[Ep 40 it 997	 PSNR demoire: 34.4345	] ----  [best_Ep_demoire 40 best_it_demoire 498 Best_PSNR_demoire 35.2776] 
+[Ep 40 it 1496	 PSNR demoire: 35.4569	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 40 it 1995	 PSNR demoire: 34.2168	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 40 it 2494	 PSNR demoire: 34.8578	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 40 it 2993	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 40 it 3492	 PSNR demoire: 34.2047	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 40 it 3991	 PSNR demoire: 34.6667	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 40	Time: 1557.0862	Loss: 187.1764	LearningRate 0.000200
+[Ep 41 it 498	 PSNR demoire: 34.5799	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 41 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 41 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 41 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 41 it 2494	 PSNR demoire: 34.6415	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 41 it 2993	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 41 it 3492	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 41 it 3991	 PSNR demoire: 34.6999	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 41	Time: 1552.5342	Loss: 189.5735	LearningRate 0.000200
+[Ep 42 it 498	 PSNR demoire: 34.8824	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 42 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 42 it 1496	 PSNR demoire: 33.0621	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 42 it 1995	 PSNR demoire: 33.9787	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 42 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 42 it 2993	 PSNR demoire: 34.4701	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 42 it 3492	 PSNR demoire: 34.3431	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 42 it 3991	 PSNR demoire: 34.4312	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 42	Time: 1539.2478	Loss: 185.7868	LearningRate 0.000200
+[Ep 43 it 498	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 43 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 43 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 43 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 43 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 43 it 2993	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 43 it 3492	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 43 it 3991	 PSNR demoire: 34.3458	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 43	Time: 1534.4251	Loss: 186.2570	LearningRate 0.000200
+[Ep 44 it 498	 PSNR demoire: 34.6920	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 44 it 997	 PSNR demoire: 33.8485	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 44 it 1496	 PSNR demoire: 35.0717	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 44 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 44 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 44 it 2993	 PSNR demoire: 34.6453	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 44 it 3492	 PSNR demoire: 34.8736	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 44 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 44	Time: 1537.1055	Loss: 184.4157	LearningRate 0.000200
+[Ep 45 it 498	 PSNR demoire: 34.7457	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 45 it 997	 PSNR demoire: 34.6668	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 45 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 45 it 1995	 PSNR demoire: 35.0523	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 45 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 45 it 2993	 PSNR demoire: 35.1792	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 45 it 3492	 PSNR demoire: 34.3175	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 45 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 45	Time: 1535.5208	Loss: 183.0707	LearningRate 0.000200
+[Ep 46 it 498	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 46 it 997	 PSNR demoire: 34.5876	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 46 it 1496	 PSNR demoire: 34.7308	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 46 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 46 it 2494	 PSNR demoire: 35.1944	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 46 it 2993	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 46 it 3492	 PSNR demoire: 34.4292	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 46 it 3991	 PSNR demoire: 29.5279	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 46	Time: 1538.7397	Loss: 187.7528	LearningRate 0.000200
+[Ep 47 it 498	 PSNR demoire: 33.5927	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 47 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 47 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 47 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 47 it 2494	 PSNR demoire: 35.1409	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 47 it 2993	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 47 it 3492	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 47 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 47	Time: 1538.3153	Loss: 184.5396	LearningRate 0.000200
+[Ep 48 it 498	 PSNR demoire: 34.8025	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 48 it 997	 PSNR demoire: 34.7030	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 48 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 48 it 1995	 PSNR demoire: 34.3175	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 48 it 2494	 PSNR demoire: 34.4617	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 48 it 2993	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 48 it 3492	 PSNR demoire: 34.9580	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 48 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 48	Time: 1544.2786	Loss: 181.9347	LearningRate 0.000200
+[Ep 49 it 498	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 49 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 49 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 49 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 49 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 49 it 2993	 PSNR demoire: 34.9684	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 49 it 3492	 PSNR demoire: 33.8134	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 49 it 3991	 PSNR demoire: 34.1414	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 49	Time: 1548.9346	Loss: 181.4167	LearningRate 0.000200
+[Ep 50 it 498	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 50 it 997	 PSNR demoire: 34.8802	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 50 it 1496	 PSNR demoire: 34.7981	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 50 it 1995	 PSNR demoire: 34.8009	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 50 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 50 it 2993	 PSNR demoire: 34.9559	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 50 it 3492	 PSNR demoire: 34.6916	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 50 it 3991	 PSNR demoire: 34.9746	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 50	Time: 1536.7454	Loss: 181.9713	LearningRate 0.000100
+[Ep 51 it 498	 PSNR demoire: 34.7871	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 51 it 997	 PSNR demoire: 34.8627	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 51 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 51 it 1995	 PSNR demoire: 35.3630	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 51 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 51 it 2993	 PSNR demoire: 34.6465	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 51 it 3492	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 51 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 51	Time: 1538.0198	Loss: 167.4969	LearningRate 0.000100
+[Ep 52 it 498	 PSNR demoire: 35.0147	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 52 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 52 it 1496	 PSNR demoire: 35.1675	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 52 it 1995	 PSNR demoire: 34.7244	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 52 it 2494	 PSNR demoire: 35.3420	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 52 it 2993	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 52 it 3492	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 52 it 3991	 PSNR demoire: 35.1287	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+Epoch: 52	Time: 1533.9792	Loss: 164.6726	LearningRate 0.000100
+[Ep 53 it 498	 PSNR demoire: 35.1918	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 53 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 53 it 1496	 PSNR demoire: 35.0362	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 53 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 53 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 53 it 2993	 PSNR demoire: 34.6473	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 53 it 3492	 PSNR demoire: 35.3791	] ----  [best_Ep_demoire 40 best_it_demoire 1496 Best_PSNR_demoire 35.4569] 
+[Ep 53 it 3991	 PSNR demoire: 35.5272	] ----  [best_Ep_demoire 53 best_it_demoire 3991 Best_PSNR_demoire 35.5272] 
+Epoch: 53	Time: 1539.3966	Loss: 163.3533	LearningRate 0.000100
+[Ep 54 it 498	 PSNR demoire: inf	] ----  [best_Ep_demoire 53 best_it_demoire 3991 Best_PSNR_demoire 35.5272] 
+[Ep 54 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 53 best_it_demoire 3991 Best_PSNR_demoire 35.5272] 
+[Ep 54 it 1496	 PSNR demoire: inf	] ----  [best_Ep_demoire 53 best_it_demoire 3991 Best_PSNR_demoire 35.5272] 
+[Ep 54 it 1995	 PSNR demoire: 35.0528	] ----  [best_Ep_demoire 53 best_it_demoire 3991 Best_PSNR_demoire 35.5272] 
+[Ep 54 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 53 best_it_demoire 3991 Best_PSNR_demoire 35.5272] 
+[Ep 54 it 2993	 PSNR demoire: 35.5434	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 54 it 3492	 PSNR demoire: 35.0395	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 54 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+Epoch: 54	Time: 1542.8290	Loss: 162.1761	LearningRate 0.000100
+[Ep 55 it 498	 PSNR demoire: 34.8944	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 55 it 997	 PSNR demoire: inf	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 55 it 1496	 PSNR demoire: 35.3429	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 55 it 1995	 PSNR demoire: inf	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 55 it 2494	 PSNR demoire: 35.4415	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 55 it 2993	 PSNR demoire: 35.4841	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 55 it 3492	 PSNR demoire: 34.9662	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 55 it 3991	 PSNR demoire: inf	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+Epoch: 55	Time: 1536.2504	Loss: 163.3107	LearningRate 0.000100
+[Ep 56 it 498	 PSNR demoire: inf	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 56 it 997	 PSNR demoire: 35.3673	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 56 it 1496	 PSNR demoire: 34.2127	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 56 it 1995	 PSNR demoire: 35.1311	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
+[Ep 56 it 2494	 PSNR demoire: inf	] ----  [best_Ep_demoire 54 best_it_demoire 2993 Best_PSNR_demoire 35.5434] 
