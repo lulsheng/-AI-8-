@@ -12,7 +12,7 @@
 ## 三、模型介绍
 1. 因为一般的基于CNN的网络结构对全局信息的捕捉不够充分，而摩尔纹的结构信息十分
 依赖于全局信息。我们采用transformer来实现我们的网络。基于之前U-Net在low-level图像处理中的应用。我们采用一种U-shape的transformer结构来捕捉全局依赖关系。总体结构如下图：
-![image.png](attachment:fc32fb96-a9e2-4c51-a8f0-447d2e21be12.png) 
+![image.png](/uformer.jpg) 
 设计了如下模块：
 **Locally-enhanced Window Transformer block (LeWin)**: Non-overlapping window-based self-attention instead of global self- attention.减少了全局self-attention的计算量，捕捉了局部注意力。<br>
 **Window-based Multi-head Self-Attention (W-MSA)**
